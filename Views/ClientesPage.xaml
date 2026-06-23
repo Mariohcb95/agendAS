@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:AgendAS.Components"
+             x:Class="AgendAS.Views.ClientesPage"
+             Title="Clientes"
+             BackgroundColor="{DynamicResource FundoCor}">
+
+    <Grid RowDefinitions="*">
+        <Grid RowDefinitions="Auto, Auto, *" Padding="{StaticResource MargemFundo}">
+            <!-- Cabeçalho -->
+            <components:CabecalhoPagina Titulo="Clientes" Subtitulo="Gerenciamento de clientes da farmácia" />
+
+            <!-- Barra de Pesquisa -->
+            <components:BarraPesquisa Grid.Row="1"
+                                      TextoPesquisa="{Binding TextoPesquisa, Mode=TwoWay}"
+                                      Placeholder="Pesquisar cliente por nome..." />
+
+            <!-- Lista de Clientes -->
+            <RefreshView Grid.Row="2"
+                         IsRefreshing="{Binding EstaCarregando}"
+                         Command="{Binding CarregarClientesCommand}">
+                
+                <Grid>
+                    <CollectionView ItemsSource="{Binding Clientes}"
+                                    SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource BorderCard}" Margin="0,0,0,8">
+                                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="12">
+                                        <!-- Avatar Circular -->
+                                        <Border Grid.Column="0"
+                                                HeightRequest="44"
+                                                WidthRequest="44"
+                                                StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 22"
+                                                BackgroundColor="{DynamicResource AzulPrimario}"
+                                                VerticalOptions="Center">
+                                            <Label Text="{Binding Iniciais}"
+                                                   TextColor="White"
+                                                   FontFamily="{StaticResource FonteSemibold}"
+                                                   FontSize="16"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center" />
+                                        </Border>
+
+                                        <!-- Detalhes do Cliente -->
+                                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                            <Label Text="{Binding Nome}" Style="{StaticResource LabelTituloPequeno}" />
+                                            <Label Text="{Binding Cpf, StringFormat='CPF: {0}'}" Style="{StaticResource LabelCorpo}" FontSize="12" />
+                                            
+                                            <!-- Telefone e Email -->
+                                            <Grid ColumnDefinitions="*, *" ColumnSpacing="6" Margin="0,4,0,0">
+                                                <HorizontalStackLayout Grid.Column="0" Spacing="4">
+                                                    <Label Text="&#xe0b0;" Style="{StaticResource LabelIcone}" FontSize="12" TextColor="{DynamicResource TextoTerciarioCor}" />
+                                                    <Label Text="{Binding Telefone}" Style="{StaticResource LabelSecundario}" FontSize="11" />
+                                                </HorizontalStackLayout>
+                                                
+                                                <HorizontalStackLayout Grid.Column="1" Spacing="4">
+                                                    <Label Text="&#xe0be;" Style="{StaticResource LabelIcone}" FontSize="12" TextColor="{DynamicResource TextoTerciarioCor}" />
+                                                    <Label Text="{Binding Email}" Style="{StaticResource LabelSecundario}" FontSize="11" LineBreakMode="TailTruncation" />
+                                                </HorizontalStackLayout>
+                                            </Grid>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <!-- Estado Vazio -->
+                    <components:TelaVazia Titulo="Nenhum cliente"
+                                          Descricao="Não há clientes que correspondam à sua pesquisa."
+                                          Icone="&#xe7ef;"
+                                          IsVisible="{Binding EstaVazio}" />
+                </Grid>
+            </RefreshView>
+        </Grid>
+
+        <!-- Indicador de Carregamento Overlay -->
+        <components:IndicadorCarregamento EstaCarregando="{Binding EstaCarregando}" Texto="Atualizando clientes..." />
+    </Grid>
+</ContentPage>

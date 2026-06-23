@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AgendAS.Components.TelaVazia"
+             x:Name="this">
+
+    <VerticalStackLayout Spacing="12"
+                         HorizontalOptions="CenterAndExpand"
+                         VerticalOptions="CenterAndExpand"
+                         Padding="24"
+                         Margin="0,48,0,0">
+        
+        <!-- Ícone do Estado Vazio -->
+        <Label Text="{Binding Icone, Source={x:Reference this}}"
+               FontFamily="{StaticResource FonteIcones}"
+               FontSize="64"
+               TextColor="{DynamicResource TextoTerciarioCor}"
+               HorizontalOptions="Center" />
+
+        <!-- Título -->
+        <Label Text="{Binding Titulo, Source={x:Reference this}}"
+               Style="{StaticResource LabelTituloPequeno}"
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Center"
+               TextColor="{DynamicResource TextoSecundarioCor}" />
+
+        <!-- Descrição -->
+        <Label Text="{Binding Descricao, Source={x:Reference this}}"
+               Style="{StaticResource LabelCorpo}"
+               FontSize="{StaticResource TamanhoTextoPequeno}"
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Center"
+               TextColor="{DynamicResource TextoTerciarioCor}" />
+    </VerticalStackLayout>
+</ContentView>

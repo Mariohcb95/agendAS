@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:AgendAS.Components"
+             x:Class="AgendAS.Views.AgendaPage"
+             Title="Agenda"
+             BackgroundColor="{DynamicResource FundoCor}">
+
+    <Grid RowDefinitions="*">
+        <!-- Estrutura Principal -->
+        <Grid RowDefinitions="Auto, Auto, Auto, *" Padding="{StaticResource MargemFundo}">
+            
+            <!-- Barra de Data com Navegação -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0,0,0,12">
+                <!-- Botão Voltar Dia -->
+                <Border Grid.Column="0"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="1"
+                        Stroke="{DynamicResource BordaCor}"
+                        BackgroundColor="{DynamicResource CardFundoCor}"
+                        HeightRequest="36"
+                        WidthRequest="36">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavegarDiaAnteriorCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label Text="&#xe5cb;" Style="{StaticResource LabelIcone}" FontSize="20" />
+                </Border>
+
+                <!-- Data Selecionada -->
+                <Label Grid.Column="1"
+                       Text="{Binding DataSelecionada, Converter={StaticResource DataParaTexto}}"
+                       Style="{StaticResource LabelTituloPequeno}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+
+                <!-- Botão Avançar Dia -->
+                <Border Grid.Column="2"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="1"
+                        Stroke="{DynamicResource BordaCor}"
+                        BackgroundColor="{DynamicResource CardFundoCor}"
+                        HeightRequest="36"
+                        WidthRequest="36">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavegarDiaSeguinteCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label Text="&#xe5cc;" Style="{StaticResource LabelIcone}" FontSize="20" />
+                </Border>
+            </Grid>
+
+            <!-- Seletor de Modo (Dia, Semana, Mês) -->
+            <Border Grid.Row="1"
+                    StrokeShape="RoundRectangle 10"
+                    StrokeThickness="1"
+                    Stroke="{DynamicResource BordaCor}"
+                    BackgroundColor="{DynamicResource FundoFormularioCor}"
+                    Padding="4"
+                    HeightRequest="42"
+                    Margin="0,0,0,16">
+                
+                <Grid ColumnDefinitions="*, *, *">
+                    <!-- Modo Dia -->
+                    <Border Grid.Column="0"
+                            StrokeShape="RoundRectangle 8"
+                            StrokeThickness="0"
+                            BackgroundColor="Transparent"
+                            Padding="2">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AlterarModoCommand}" CommandParameter="Dia" />
+                        </Border.GestureRecognizers>
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding ModoDiaAtivo}" Value="True">
+                                <Setter Property="BackgroundColor" Value="{DynamicResource AzulPrimario}" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Label Text="Dia" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center"
+                               FontFamily="{StaticResource FonteSemibold}"
+                               FontSize="12"
+                               TextColor="{DynamicResource TextoSecundarioCor}">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding ModoDiaAtivo}" Value="True">
+                                    <Setter Property="TextColor" Value="White" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Border>
+                    
+                    <!-- Modo Semana -->
+                    <Border Grid.Column="1"
+                            StrokeShape="RoundRectangle 8"
+                            StrokeThickness="0"
+                            BackgroundColor="Transparent"
+                            Padding="2">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AlterarModoCommand}" CommandParameter="Semana" />
+                        </Border.GestureRecognizers>
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding ModoSemanaAtivo}" Value="True">
+                                <Setter Property="BackgroundColor" Value="{DynamicResource AzulPrimario}" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Label Text="Semana" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center"
+                               FontFamily="{StaticResource FonteSemibold}"
+                               FontSize="12"
+                               TextColor="{DynamicResource TextoSecundarioCor}">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding ModoSemanaAtivo}" Value="True">
+                                    <Setter Property="TextColor" Value="White" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Border>
+
+                    <!-- Modo Mês -->
+                    <Border Grid.Column="2"
+                            StrokeShape="RoundRectangle 8"
+                            StrokeThickness="0"
+                            BackgroundColor="Transparent"
+                            Padding="2">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AlterarModoCommand}" CommandParameter="Mês" />
+                        </Border.GestureRecognizers>
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding ModoMesAtivo}" Value="True">
+                                <Setter Property="BackgroundColor" Value="{DynamicResource AzulPrimario}" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Label Text="Mês" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center"
+                               FontFamily="{StaticResource FonteSemibold}"
+                               FontSize="12"
+                               TextColor="{DynamicResource TextoSecundarioCor}">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding ModoMesAtivo}" Value="True">
+                                    <Setter Property="TextColor" Value="White" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Barra de Pesquisa -->
+            <components:BarraPesquisa Grid.Row="2" 
+                                      TextoPesquisa="{Binding TextoPesquisa, Mode=TwoWay}"
+                                      Placeholder="Pesquisar cliente ou medicamento..." />
+
+            <!-- Lista de Agendamentos -->
+            <RefreshView Grid.Row="3"
+                         IsRefreshing="{Binding EstaCarregando}"
+                         Command="{Binding CarregarAgendamentosCommand}">
+                
+                <Grid>
+                    <CollectionView ItemsSource="{Binding AgendamentosFiltrados}"
+                                    SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <components:CardAgendamento Agendamento="{Binding .}"
+                                                             ComandoToque="{Binding BindingContext.DetalharAgendamentoCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <!-- Estado Vazio -->
+                    <components:TelaVazia Titulo="Nenhum agendamento"
+                                          Descricao="Não há atendimentos programados para este período com o filtro inserido."
+                                          Icone="&#xeb93;"
+                                          IsVisible="{Binding EstaVazio}" />
+                </Grid>
+            </RefreshView>
+        </Grid>
+
+        <!-- Botão Flutuante (FAB) para Adicionar -->
+        <Border HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="24"
+                HeightRequest="56"
+                WidthRequest="56"
+                StrokeShape="RoundRectangle 28"
+                StrokeThickness="0"
+                Background="{DynamicResource FundoGradienteBotao}"
+                ZIndex="10">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NovoAgendamentoCommand}" />
+            </Border.GestureRecognizers>
+            <Border.Shadow>
+                <Shadow Offset="0,4" Radius="8" Opacity="0.3" Brush="Black" />
+            </Border.Shadow>
+            <Label Text="&#xe145;" 
+                   FontFamily="MaterialIcons"
+                   FontSize="24"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+        </Border>
+
+        <!-- Indicador de Carregamento Overlay -->
+        <components:IndicadorCarregamento EstaCarregando="{Binding EstaCarregando}" Texto="Atualizando agenda..." />
+    </Grid>
+</ContentPage>

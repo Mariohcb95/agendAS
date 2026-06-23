@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:AgendAS.Components"
+             x:Class="AgendAS.Components.ColunaKanban"
+             x:Name="this">
+
+    <Border StrokeShape="RoundRectangle 12"
+            StrokeThickness="1"
+            Stroke="{DynamicResource BordaCor}"
+            BackgroundColor="{DynamicResource FundoCor}"
+            WidthRequest="{StaticResource LarguraColunaKanban}"
+            Margin="0,0,12,0"
+            Padding="8">
+        
+        <Border.GestureRecognizers>
+            <DropGestureRecognizer AllowDrop="True" 
+                                   DragOver="OnDragOver"
+                                   DragLeave="OnDragLeave"
+                                   Drop="OnDrop" />
+        </Border.GestureRecognizers>
+
+        <Grid RowDefinitions="Auto, *">
+            <!-- Header da Coluna -->
+            <Border Grid.Row="0"
+                    StrokeShape="RoundRectangle 8"
+                    StrokeThickness="0"
+                    BackgroundColor="{Binding CorColuna, Source={x:Reference this}}"
+                    Padding="12,8"
+                    Margin="0,0,0,8">
+                
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Grid.Column="0"
+                           Text="{Binding Titulo, Source={x:Reference this}}"
+                           TextColor="White"
+                           FontFamily="{StaticResource FonteSemibold}"
+                           FontSize="{StaticResource TamanhoTextoPequeno}"
+                           VerticalOptions="Center" />
+                    
+                    <Border Grid.Column="1"
+                            StrokeShape="RoundRectangle 10"
+                            StrokeThickness="0"
+                            BackgroundColor="#33FFFFFF"
+                            Padding="6,2"
+                            VerticalOptions="Center">
+                        
+                        <Label Text="{Binding Contador, Source={x:Reference this}}"
+                               TextColor="White"
+                               FontFamily="{StaticResource FonteSemibold}"
+                               FontSize="{StaticResource TamanhoTextoPequeno}" />
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Lista de Cards -->
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding ListaAgendamentos, Source={x:Reference this}}"
+                            EmptyViewTemplate="{Binding EmptyTemplate, Source={x:Reference this}}">
+                
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="0" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <components:CardKanban Agendamento="{Binding .}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Border>
+</ContentView>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:AgendAS.Components"
+             x:Class="AgendAS.Views.AplicadoresPage"
+             Title="Aplicadores"
+             BackgroundColor="{DynamicResource FundoCor}">
+
+    <Grid RowDefinitions="*">
+        <Grid RowDefinitions="Auto, *" Padding="{StaticResource MargemFundo}">
+            <!-- Cabeçalho -->
+            <components:CabecalhoPagina Titulo="Farmacêuticos Aplicadores" Subtitulo="Equipe de aplicadores e disponibilidade" />
+
+            <!-- Lista de Aplicadores -->
+            <RefreshView Grid.Row="1"
+                         IsRefreshing="{Binding EstaCarregando}"
+                         Command="{Binding CarregarAplicadoresCommand}">
+                
+                <Grid>
+                    <CollectionView ItemsSource="{Binding Aplicadores}"
+                                    SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource BorderCard}" Margin="0,0,0,8">
+                                    <Grid ColumnDefinitions="*, Auto" RowSpacing="4">
+                                        <!-- Detalhes do Aplicador -->
+                                        <VerticalStackLayout Spacing="2">
+                                            <Label Text="{Binding Nome}" Style="{StaticResource LabelTituloPequeno}" />
+                                            <Label Text="{Binding Crf, StringFormat='CRF: {0}'}" Style="{StaticResource LabelCorpo}" FontSize="12" />
+                                            <Label Text="{Binding Especialidade}" Style="{StaticResource LabelCorpo}" FontSize="12" TextColor="{DynamicResource AzulClaro}" FontFamily="{StaticResource FonteSemibold}" />
+
+                                            <!-- Telefone e Email -->
+                                            <Grid ColumnDefinitions="*, *" ColumnSpacing="6" Margin="0,6,0,0">
+                                                <HorizontalStackLayout Grid.Column="0" Spacing="4">
+                                                    <Label Text="&#xe0b0;" Style="{StaticResource LabelIcone}" FontSize="12" TextColor="{DynamicResource TextoTerciarioCor}" />
+                                                    <Label Text="{Binding Telefone}" Style="{StaticResource LabelSecundario}" FontSize="11" />
+                                                </HorizontalStackLayout>
+
+                                                <HorizontalStackLayout Grid.Column="1" Spacing="4">
+                                                    <Label Text="&#xe0be;" Style="{StaticResource LabelIcone}" FontSize="12" TextColor="{DynamicResource TextoTerciarioCor}" />
+                                                    <Label Text="{Binding Email}" Style="{StaticResource LabelSecundario}" FontSize="11" LineBreakMode="TailTruncation" />
+                                                </HorizontalStackLayout>
+                                            </Grid>
+                                        </VerticalStackLayout>
+
+                                        <!-- Badge de Disponibilidade com Triggers -->
+                                        <Border Grid.Column="1"
+                                                StrokeShape="RoundRectangle 8"
+                                                StrokeThickness="0"
+                                                Padding="8,4"
+                                                VerticalOptions="Center"
+                                                BackgroundColor="Gray">
+                                            
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding StatusDisponibilidade}" Value="Disponivel">
+                                                    <Setter Property="BackgroundColor" Value="{DynamicResource VerdeConfirmado}" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding StatusDisponibilidade}" Value="Ocupado">
+                                                    <Setter Property="BackgroundColor" Value="{DynamicResource AmareloEmAndamento}" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding StatusDisponibilidade}" Value="Ferias">
+                                                    <Setter Property="BackgroundColor" Value="{DynamicResource AzulAgendado}" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding StatusDisponibilidade}" Value="Indisponivel">
+                                                    <Setter Property="BackgroundColor" Value="{DynamicResource VermelhoCancelado}" />
+                                                </DataTrigger>
+                                            </Border.Triggers>
+
+                                            <Label Text="Desconhecido"
+                                                   TextColor="White"
+                                                   FontFamily="{StaticResource FonteSemibold}"
+                                                   FontSize="{StaticResource TamanhoTextoMini}"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center">
+                                                
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding StatusDisponibilidade}" Value="Disponivel">
+                                                        <Setter Property="Text" Value="Disponível" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding StatusDisponibilidade}" Value="Ocupado">
+                                                        <Setter Property="Text" Value="Ocupado" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding StatusDisponibilidade}" Value="Ferias">
+                                                        <Setter Property="Text" Value="Férias" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding StatusDisponibilidade}" Value="Indisponivel">
+                                                        <Setter Property="Text" Value="Indisponível" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <!-- Estado Vazio -->
+                    <components:TelaVazia Titulo="Sem aplicadores"
+                                          Descricao="Não há farmacêuticos cadastrados no momento."
+                                          Icone="&#xe7ef;"
+                                          IsVisible="{Binding EstaVazio}" />
+                </Grid>
+            </RefreshView>
+        </Grid>
+
+        <!-- Indicador de Carregamento Overlay -->
+        <components:IndicadorCarregamento EstaCarregando="{Binding EstaCarregando}" Texto="Atualizando equipe..." />
+    </Grid>
+</ContentPage>

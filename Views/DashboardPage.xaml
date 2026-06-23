@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:AgendAS.Components"
+             x:Class="AgendAS.Views.DashboardPage"
+             Title="Dashboard"
+             BackgroundColor="{DynamicResource FundoCor}">
+
+    <Grid RowDefinitions="*">
+        <!-- Pull to Refresh Wrapper -->
+        <RefreshView IsRefreshing="{Binding EstaCarregando}"
+                     Command="{Binding CarregarDadosCommand}"
+                     RefreshColor="{DynamicResource AzulClaro}">
+            
+            <ScrollView Padding="{StaticResource MargemFundo}">
+                <VerticalStackLayout Spacing="20">
+                    
+                    <!-- Cabeçalho Executivo -->
+                    <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,8">
+                        <VerticalStackLayout Spacing="2" Grid.Column="0">
+                            <Label Text="{Binding SaudacaoUsuario}"
+                                   Style="{StaticResource LabelTituloGrande}"
+                                   FontSize="22" />
+                            <Label Text="Aqui está o resumo operacional de hoje"
+                                   Style="{StaticResource LabelCorpo}" />
+                        </VerticalStackLayout>
+                        
+                        <Label Grid.Column="1"
+                               Text="&#xe7f4;" 
+                               Style="{StaticResource LabelIcone}" 
+                               FontSize="24"
+                               TextColor="{DynamicResource AzulClaro}"
+                               VerticalOptions="Center" />
+                    </Grid>
+
+                    <!-- Grid de Estatísticas (2 colunas) -->
+                    <Grid ColumnDefinitions="*, *" 
+                          RowDefinitions="Auto, Auto" 
+                          ColumnSpacing="12" 
+                          RowSpacing="12">
+                        
+                        <components:CardDashboard Grid.Row="0" Grid.Column="0"
+                                                  Titulo="Aplicações Hoje"
+                                                  Valor="{Binding TotalAplicacoesHoje}"
+                                                  Icone="&#xe85d;"
+                                                  CorIcone="{DynamicResource AzulAgendado}"
+                                                  CorFundoIcone="#1A3B82F6" />
+
+                        <components:CardDashboard Grid.Row="0" Grid.Column="1"
+                                                  Titulo="Concluídas"
+                                                  Valor="{Binding TotalAplicacoesConcluidas}"
+                                                  Icone="&#xe86c;"
+                                                  CorIcone="{DynamicResource VerdeConfirmado}"
+                                                  CorFundoIcone="#1A10B981" />
+
+                        <components:CardDashboard Grid.Row="1" Grid.Column="0"
+                                                  Titulo="Pendentes"
+                                                  Valor="{Binding TotalAplicacoesPendentes}"
+                                                  Icone="&#xe88f;"
+                                                  CorIcone="{DynamicResource AmareloEmAndamento}"
+                                                  CorFundoIcone="#1AF59E0B" />
+
+                        <components:CardDashboard Grid.Row="1" Grid.Column="1"
+                                                  Titulo="Aplicadores"
+                                                  Valor="{Binding TotalAplicadoresDisponiveis}"
+                                                  Icone="&#xe7fd;"
+                                                  CorIcone="{DynamicResource RoxoConcluido}"
+                                                  CorFundoIcone="#1A8B5CF6" />
+                    </Grid>
+
+                    <!-- Seção de Próximas Aplicações -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Próximas Aplicações"
+                               Style="{StaticResource LabelTituloPequeno}"
+                               Margin="4,0,0,4" />
+
+                        <!-- Listagem -->
+                        <CollectionView ItemsSource="{Binding ProximasAplicacoes}"
+                                        EmptyViewTemplate="{StaticResource TelaVaziaTemplate}"
+                                        SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <components:CardAgendamento Agendamento="{Binding .}"
+                                                                 ComandoToque="{Binding BindingContext.DetalharAgendamentoCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        
+                        <!-- Estado Vazio quando não houver próximas aplicações -->
+                        <components:TelaVazia Titulo="Sem próximas aplicações"
+                                              Descricao="Não há agendamentos agendados ou confirmados para as próximas horas."
+                                              Icone="&#xeb9f;"
+                                              IsVisible="{Binding EstaVazio}" />
+                    </VerticalStackLayout>
+                    
+                </VerticalStackLayout>
+            </ScrollView>
+        </RefreshView>
+
+        <!-- Indicador de Carregamento Overlay -->
+        <components:IndicadorCarregamento EstaCarregando="{Binding EstaCarregando}" Texto="Atualizando painel..." />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:AgendAS.Components"
+             x:Class="AgendAS.Views.ConfiguracoesPage"
+             Title="Configurações"
+             BackgroundColor="{DynamicResource FundoCor}">
+
+    <ScrollView Padding="{StaticResource MargemFundo}">
+        <VerticalStackLayout Spacing="16">
+            <!-- Cabeçalho -->
+            <components:CabecalhoPagina Titulo="Configurações" Subtitulo="Ajustes de preferências do aplicativo" />
+
+            <!-- Card de Ajustes Visuais -->
+            <Label Text="Tema Visual" Style="{StaticResource LabelTituloPequeno}" Margin="4,8,0,0" />
+            <Border Style="{StaticResource BorderCard}">
+                <Grid ColumnDefinitions="*, Auto" Padding="4">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                        <Label Text="Tema Escuro Premium" Style="{StaticResource LabelTituloPequeno}" FontSize="14" />
+                        <Label Text="Altera as cores para tons escuros sofisticados" Style="{StaticResource LabelCorpo}" FontSize="12" />
+                    </VerticalStackLayout>
+                    
+                    <Switch Grid.Column="1"
+                            IsToggled="{Binding TemaEscuroAtivo, Mode=TwoWay}"
+                            OnColor="{DynamicResource AzulClaro}"
+                            ThumbColor="{DynamicResource AzulPrimario}"
+                            VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Card de Ajustes de Notificação -->
+            <Label Text="Notificações e Lembretes" Style="{StaticResource LabelTituloPequeno}" Margin="4,8,0,0" />
+            <Border Style="{StaticResource BorderCard}">
+                <Grid ColumnDefinitions="*, Auto" Padding="4">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                        <Label Text="Lembretes de Aplicação" Style="{StaticResource LabelTituloPequeno}" FontSize="14" />
+                        <Label Text="Notificar o profissional antes das aplicações agendadas" Style="{StaticResource LabelCorpo}" FontSize="12" />
+                    </VerticalStackLayout>
+
+                    <Switch Grid.Column="1"
+                            IsToggled="{Binding NotificacoesAtivas, Mode=TwoWay}"
+                            OnColor="{DynamicResource AzulClaro}"
+                            ThumbColor="{DynamicResource AzulPrimario}"
+                            VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Sobre o App -->
+            <Label Text="Informações do Sistema" Style="{StaticResource LabelTituloPequeno}" Margin="4,16,0,0" />
+            <Border Style="{StaticResource BorderCard}">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label Grid.Column="0" Text="Versão do Aplicativo" Style="{StaticResource LabelCorpo}" />
+                        <Label Grid.Column="1" Text="1.0.0 (Build 1)" Style="{StaticResource LabelSemibold}" FontSize="14" />
+                    </Grid>
+                    
+                    <BoxView HeightRequest="1" Color="{DynamicResource BordaCor}" />
+
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label Grid.Column="0" Text="Tecnologia" Style="{StaticResource LabelCorpo}" />
+                        <Label Grid.Column="1" Text=".NET 10 MAUI" Style="{StaticResource LabelSemibold}" FontSize="14" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

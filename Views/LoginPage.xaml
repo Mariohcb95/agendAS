@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:AgendAS.ViewModels"
+             xmlns:components="clr-namespace:AgendAS.Components"
+             x:Class="AgendAS.Views.LoginPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{DynamicResource FundoCor}">
+
+    <!-- Grid Raiz com o background gradiente aplicado diretamente -->
+    <Grid Background="{DynamicResource FundoGradientePrincipal}">
+        <!-- ScrollView contendo a hierarquia de login por cima do background -->
+        <ScrollView Padding="0">
+            <Grid RowDefinitions="*, Auto" MinimumHeightRequest="600" VerticalOptions="FillAndExpand">
+                
+                <!-- Área Superior do Logotipo e Boas-vindas -->
+                <VerticalStackLayout Grid.Row="0"
+                                     Spacing="12"
+                                     VerticalOptions="Center"
+                                     Padding="24"
+                                     Margin="0,48,0,0">
+                    
+                    <!-- Símbolo de Saúde / Premium (Material Icons) -->
+                    <Border StrokeShape="RoundRectangle 24"
+                            StrokeThickness="0"
+                            HeightRequest="80"
+                            WidthRequest="80"
+                            BackgroundColor="#22FFFFFF"
+                            HorizontalOptions="Center">
+                        <Label Text="&#xe57f;" 
+                               FontFamily="MaterialIcons"
+                               FontSize="40"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </Border>
+
+                    <Label Text="AgendAS"
+                           TextColor="White"
+                           FontFamily="{StaticResource FonteSemibold}"
+                           FontSize="32"
+                           HorizontalOptions="Center" />
+
+                    <Label Text="Farmácia Premium &amp; Aplicações"
+                           TextColor="{DynamicResource AzulAccent}"
+                           FontFamily="{StaticResource FontePadrao}"
+                           FontSize="{StaticResource TamanhoTextoCorpo}"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <!-- Card Branco de Login com Slide Up e Fade -->
+                <Border x:Name="LoginCard"
+                        Grid.Row="1"
+                        StrokeThickness="0"
+                        BackgroundColor="{DynamicResource CardFundoCor}"
+                        Padding="24,32,24,48"
+                        TranslationY="200"
+                        Opacity="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24,24,0,0" />
+                    </Border.StrokeShape>
+
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="Acesse sua conta"
+                               Style="{StaticResource LabelTituloMedio}"
+                               Margin="0,0,0,8" />
+
+                        <!-- Mensagem de Erro Geral -->
+                        <Label Text="{Binding ErroLogin}"
+                               TextColor="{DynamicResource VermelhoCancelado}"
+                               FontSize="{StaticResource TamanhoTextoPequeno}"
+                               IsVisible="{Binding ErroLogin, Converter={StaticResource StringPreenchidaParaBoolean}}"
+                               HorizontalOptions="Center" />
+
+                        <!-- Usuário -->
+                        <components:CampoFormulario Titulo="Usuário"
+                                                    MensagemErro="{Binding ErroUsuario}">
+                            <Entry Text="{Binding NomeUsuario, Mode=TwoWay}"
+                                   Placeholder="Ex: admin"
+                                   Style="{StaticResource EntryCustom}" />
+                        </components:CampoFormulario>
+
+                        <!-- Senha -->
+                        <components:CampoFormulario Titulo="Senha"
+                                                    MensagemErro="{Binding ErroSenha}">
+                            <Entry Text="{Binding Senha, Mode=TwoWay}"
+                                   Placeholder="Ex: 123456"
+                                   IsPassword="True"
+                                   Style="{StaticResource EntryCustom}" />
+                        </components:CampoFormulario>
+
+                        <!-- Link Esqueci Minha Senha -->
+                        <Label Text="Esqueceu sua senha?"
+                               TextColor="{DynamicResource AzulClaro}"
+                               FontFamily="{StaticResource FonteSemibold}"
+                               FontSize="{StaticResource TamanhoTextoPequeno}"
+                               HorizontalOptions="End"
+                               Margin="0,0,0,8">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding EsqueciSenhaCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <!-- Botão Entrar -->
+                        <components:BotaoPrimario Texto="Acessar Sistema"
+                                                  Comando="{Binding EntrarCommand}"
+                                                  EstaCarregando="{Binding EstaCarregando}" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>

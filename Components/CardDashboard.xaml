@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AgendAS.Components.CardDashboard"
+             x:Name="this">
+
+    <Border Style="{StaticResource BorderCard}" Padding="16">
+        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" RowSpacing="8">
+            
+            <!-- Título do Card -->
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Text="{Binding Titulo, Source={x:Reference this}}"
+                   Style="{StaticResource LabelSecundario}"
+                   FontFamily="{StaticResource FonteSemibold}"
+                   VerticalOptions="Center" />
+
+            <!-- Ícone correspondente -->
+            <Border Grid.Row="0"
+                    Grid.Column="1"
+                    HeightRequest="36"
+                    WidthRequest="36"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{Binding CorFundoIcone, Source={x:Reference this}}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End">
+                
+                <Label Text="{Binding Icone, Source={x:Reference this}}"
+                       Style="{StaticResource LabelIcone}"
+                       TextColor="{Binding CorIcone, Source={x:Reference this}}"
+                       FontSize="20"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+
+            <!-- Valor do Card -->
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Text="{Binding Valor, Source={x:Reference this}}"
+                   Style="{StaticResource LabelTituloGrande}"
+                   FontSize="28"
+                   FontFamily="{StaticResource FonteSemibold}"
+                   TextColor="{DynamicResource TextoPrimarioCor}" />
+        </Grid>
+    </Border>
+</ContentView>

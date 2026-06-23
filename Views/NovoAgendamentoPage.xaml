@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:AgendAS.Components"
+             x:Class="AgendAS.Views.NovoAgendamentoPage"
+             Title="{Binding Titulo}"
+             BackgroundColor="{DynamicResource FundoCor}">
+
+    <Grid RowDefinitions="*">
+        <ScrollView Padding="{StaticResource MargemFundo}">
+            <VerticalStackLayout Spacing="8">
+                
+                <!-- Cabeçalho -->
+                <components:CabecalhoPagina Titulo="{Binding Titulo}"
+                                            Subtitulo="Preencha os campos abaixo para registrar a aplicação" />
+
+                <!-- Cliente -->
+                <components:CampoFormulario Titulo="Cliente" MensagemErro="{Binding ErroCliente}">
+                    <Picker ItemsSource="{Binding Clientes}"
+                            SelectedItem="{Binding ClienteSelecionado, Mode=TwoWay}"
+                            ItemDisplayBinding="{Binding Nome}"
+                            Title="Selecione um cliente" />
+                </components:CampoFormulario>
+
+                <!-- Medicamento -->
+                <components:CampoFormulario Titulo="Medicamento" MensagemErro="{Binding ErroMedicamento}">
+                    <Entry Text="{Binding Medicamento, Mode=TwoWay}"
+                           Placeholder="Ex: Ozempic 1mg, Depo-Provera"
+                           Style="{StaticResource EntryCustom}" />
+                </components:CampoFormulario>
+
+                <!-- Aplicador -->
+                <components:CampoFormulario Titulo="Farmacêutico Aplicador" MensagemErro="{Binding ErroAplicador}">
+                    <Picker ItemsSource="{Binding Aplicadores}"
+                            SelectedItem="{Binding AplicadorSelecionado, Mode=TwoWay}"
+                            ItemDisplayBinding="{Binding Nome}"
+                            Title="Selecione um aplicador" />
+                </components:CampoFormulario>
+
+                <!-- Local de Aplicação -->
+                <components:CampoFormulario Titulo="Local da Aplicação" MensagemErro="{Binding ErroLocal}">
+                    <Entry Text="{Binding LocalAplicacao, Mode=TwoWay}"
+                           Placeholder="Ex: Sala de Injeção Premium"
+                           Style="{StaticResource EntryCustom}" />
+                </components:CampoFormulario>
+
+                <!-- Data e Hora -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+                    <components:CampoFormulario Grid.Column="0" Titulo="Data" MensagemErro="{Binding ErroData}">
+                        <DatePicker Date="{Binding Data, Mode=TwoWay}" Format="dd/MM/yyyy" />
+                    </components:CampoFormulario>
+
+                    <components:CampoFormulario Grid.Column="1" Titulo="Hora">
+                        <TimePicker Time="{Binding Hora, Mode=TwoWay}" Format="hh:mm" />
+                    </components:CampoFormulario>
+                </Grid>
+
+                <!-- Status (Visível apenas em Modo Edição) -->
+                <components:CampoFormulario Titulo="Status do Agendamento" 
+                                            IsVisible="{Binding ModoEdicao}">
+                    <Picker ItemsSource="{Binding ListaStatus}"
+                            SelectedItem="{Binding Status, Mode=TwoWay}"
+                            Title="Selecione o status" />
+                </components:CampoFormulario>
+
+                <!-- Detalhes da Aplicação -->
+                <components:CampoFormulario Titulo="Detalhes da Aplicação (Via, Lote, Posologia)" AlturaCampo="100">
+                    <Editor Text="{Binding DetalhesAplicacao, Mode=TwoWay}"
+                            Placeholder="Ex: Aplicação via subcutânea no abdômen. Lote: 123456A."
+                            HeightRequest="80" />
+                </components:CampoFormulario>
+
+                <!-- Observações -->
+                <components:CampoFormulario Titulo="Observações Médicas / Gerais" AlturaCampo="100">
+                    <Editor Text="{Binding Observacoes, Mode=TwoWay}"
+                            Placeholder="Ex: Paciente relata histórico de alergia leve."
+                            HeightRequest="80" />
+                </components:CampoFormulario>
+
+                <!-- Card de Alerta de Conflito de Agenda -->
+                <Border StrokeShape="RoundRectangle 8"
+                        StrokeThickness="1"
+                        Stroke="{DynamicResource VermelhoCancelado}"
+                        BackgroundColor="#1AEF4444"
+                        Padding="12"
+                        Margin="0,0,0,16"
+                        IsVisible="{Binding PossuiConflito}">
+                    
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Label Grid.Column="0" 
+                               Text="&#xec1a;" 
+                               Style="{StaticResource LabelIcone}" 
+                               TextColor="{DynamicResource VermelhoCancelado}" 
+                               FontSize="24"
+                               Margin="0,0,10,0"
+                               VerticalOptions="Center" />
+                        
+                        <Label Grid.Column="1"
+                               Text="{Binding MensagemConflito}"
+                               TextColor="{DynamicResource TextoPrimarioCor}"
+                               FontSize="{StaticResource TamanhoTextoPequeno}"
+                               FontFamily="{StaticResource FonteSemibold}"
+                               VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Botões de Ação -->
+                <VerticalStackLayout Spacing="10" Margin="0,8,0,24">
+                    <!-- Salvar -->
+                    <components:BotaoPrimario Texto="Confirmar Agendamento"
+                                              Comando="{Binding SalvarCommand}"
+                                              EstaCarregando="{Binding EstaCarregando}" />
+
+                    <!-- Excluir (Visível apenas em edição) -->
+                    <components:BotaoSecundario Texto="Excluir Agendamento"
+                                                Comando="{Binding ExcluirCommand}"
+                                                IsVisible="{Binding ModoEdicao}"
+                                                EstaCarregando="{Binding EstaCarregando}" />
+
+                    <!-- Cancelar -->
+                    <components:BotaoSecundario Texto="Voltar / Cancelar"
+                                                Comando="{Binding CancelarCommand}" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Indicador de Carregamento Overlay -->
+        <components:IndicadorCarregamento EstaCarregando="{Binding EstaCarregando}" Texto="Salvando agendamento..." />
+    </Grid>
+</ContentPage>

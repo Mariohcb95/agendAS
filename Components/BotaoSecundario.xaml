@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AgendAS.Components.BotaoSecundario"
+             x:Name="this">
+
+    <Border StrokeShape="RoundRectangle 12"
+            StrokeThickness="1"
+            Stroke="{DynamicResource AzulPrimario}"
+            BackgroundColor="Transparent"
+            HeightRequest="48"
+            HorizontalOptions="FillAndExpand">
+        
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Comando, Source={x:Reference this}}" />
+        </Border.GestureRecognizers>
+
+        <Grid HorizontalOptions="Center" VerticalOptions="Center">
+            <!-- Label normal -->
+            <Label Text="{Binding Texto, Source={x:Reference this}}"
+                   TextColor="{DynamicResource AzulPrimario}"
+                   FontFamily="{StaticResource FonteSemibold}"
+                   FontSize="{StaticResource TamanhoTextoCorpo}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   IsVisible="{Binding EstaCarregando, Source={x:Reference this}, Converter={StaticResource InversoBooleanConverter}}" />
+
+            <!-- Indicador de Carregamento -->
+            <ActivityIndicator IsRunning="{Binding EstaCarregando, Source={x:Reference this}}"
+                               Color="{DynamicResource AzulPrimario}"
+                               HeightRequest="24"
+                               WidthRequest="24"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               IsVisible="{Binding EstaCarregando, Source={x:Reference this}}" />
+        </Grid>
+    </Border>
+</ContentView>

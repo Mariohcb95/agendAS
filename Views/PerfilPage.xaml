@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:AgendAS.Components"
+             x:Class="AgendAS.Views.PerfilPage"
+             Title="Meu Perfil"
+             BackgroundColor="{DynamicResource FundoCor}">
+
+    <ScrollView Padding="{StaticResource MargemFundo}">
+        <VerticalStackLayout Spacing="24" HorizontalOptions="CenterAndExpand">
+            
+            <!-- Avatar Executivo Grande -->
+            <Border HeightRequest="100"
+                    WidthRequest="100"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 50"
+                    BackgroundColor="{DynamicResource AzulPrimario}"
+                    HorizontalOptions="Center"
+                    Margin="0,24,0,0">
+                
+                <Label Text="AD"
+                       TextColor="White"
+                       FontFamily="{StaticResource FonteSemibold}"
+                       FontSize="36"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+
+            <!-- Nome e Cargo -->
+            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                <Label Text="{Binding Usuario.NomeCompleto}"
+                       Style="{StaticResource LabelTituloGrande}"
+                       FontSize="22"
+                       HorizontalOptions="Center" />
+                <Label Text="{Binding Usuario.Cargo}"
+                       Style="{StaticResource LabelCorpo}"
+                       TextColor="{DynamicResource AzulClaro}"
+                       FontFamily="{StaticResource FonteSemibold}"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Card com Detalhes Adicionais -->
+            <Border Style="{StaticResource BorderCard}" WidthRequest="320" HorizontalOptions="Center">
+                <VerticalStackLayout Spacing="16">
+                    <!-- Usuário -->
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Nome de Usuário" Style="{StaticResource LabelSecundario}" />
+                        <Label Text="{Binding Usuario.NomeUsuario}" Style="{StaticResource LabelTituloPequeno}" />
+                    </VerticalStackLayout>
+                    
+                    <BoxView HeightRequest="1" Color="{DynamicResource BordaCor}" />
+
+                    <!-- E-mail -->
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="E-mail Corporativo" Style="{StaticResource LabelSecundario}" />
+                        <Label Text="{Binding Usuario.Email}" Style="{StaticResource LabelTituloPequeno}" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Botão de Logout -->
+            <components:BotaoSecundario Texto="Encerrar Sessão (Sair)"
+                                        Comando="{Binding LogoutCommand}"
+                                        WidthRequest="320"
+                                        HorizontalOptions="Center"
+                                        Margin="0,16,0,0" />
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

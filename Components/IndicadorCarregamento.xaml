@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AgendAS.Components.IndicadorCarregamento"
+             x:Name="this">
+
+    <Grid BackgroundColor="#99000000"
+          IsVisible="{Binding EstaCarregando, Source={x:Reference this}}"
+          HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand"
+          ZIndex="999">
+        
+        <VerticalStackLayout HorizontalOptions="Center"
+                             VerticalOptions="Center"
+                             Spacing="12">
+            
+            <ActivityIndicator IsRunning="{Binding EstaCarregando, Source={x:Reference this}}"
+                               Color="{DynamicResource AzulClaro}"
+                               HeightRequest="48"
+                               WidthRequest="48" />
+
+            <Label Text="{Binding Texto, Source={x:Reference this}}"
+                   TextColor="White"
+                   FontFamily="{StaticResource FonteSemibold}"
+                   FontSize="{StaticResource TamanhoTextoCorpo}"
+                   HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentView>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:AgendAS.Components"
+             x:Class="AgendAS.Views.KanbanPage"
+             Title="Fluxo Kanban"
+             BackgroundColor="{DynamicResource FundoCor}">
+
+    <ContentPage.Resources>
+        <!-- Template de Estado Vazio para Coluna do Kanban -->
+        <DataTemplate x:Key="ColunaVaziaTemplate">
+            <VerticalStackLayout Spacing="8" 
+                                 Padding="16" 
+                                 HorizontalOptions="Center" 
+                                 VerticalOptions="Center"
+                                 Margin="0,24,0,0">
+                <Label Text="&#xe8fd;" 
+                       FontFamily="MaterialIcons" 
+                       FontSize="36" 
+                       TextColor="{DynamicResource TextoTerciarioCor}" 
+                       HorizontalOptions="Center" />
+                <Label Text="Sem aplicações" 
+                       Style="{StaticResource LabelSecundario}" 
+                       FontSize="11"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*">
+        <!-- Pull to Refresh -->
+        <RefreshView IsRefreshing="{Binding EstaCarregando}"
+                     Command="{Binding CarregarKanbanCommand}"
+                     RefreshColor="{DynamicResource AzulClaro}">
+            
+            <Grid RowDefinitions="Auto, *" Padding="{StaticResource MargemFundo}">
+                
+                <!-- Cabeçalho -->
+                <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,16">
+                    <VerticalStackLayout Spacing="2" Grid.Column="0">
+                        <Label Text="Quadro de Aplicações" Style="{StaticResource LabelTituloGrande}" FontSize="20" />
+                        <Label Text="Arraste os cards para atualizar o status" Style="{StaticResource LabelCorpo}" />
+                    </VerticalStackLayout>
+                    
+                    <Label Grid.Column="1" Text="&#xe8f4;" Style="{StaticResource LabelIcone}" FontSize="24" TextColor="{DynamicResource AzulClaro}" VerticalOptions="Center" />
+                </Grid>
+
+                <!-- ScrollView Horizontal com as Colunas -->
+                <ScrollView Grid.Row="1" 
+                            Orientation="Horizontal" 
+                            HorizontalScrollBarVisibility="Never">
+                    
+                    <HorizontalStackLayout Spacing="0" Padding="0,0,12,0">
+                        
+                        <!-- Coluna 1: Agendado -->
+                        <components:ColunaKanban Titulo="Agendados"
+                                                 Contador="{Binding TotalAgendados}"
+                                                 CorColuna="{DynamicResource AzulAgendado}"
+                                                 ListaAgendamentos="{Binding AgendadosObservable}"
+                                                 StatusAlvo="Agendado"
+                                                 ComandoDrop="{Binding MoverAgendamentoCommand}"
+                                                 EmptyTemplate="{StaticResource ColunaVaziaTemplate}" />
+
+                        <!-- Coluna 2: Confirmado -->
+                        <components:ColunaKanban Titulo="Confirmados"
+                                                 Contador="{Binding TotalConfirmados}"
+                                                 CorColuna="{DynamicResource VerdeConfirmado}"
+                                                 ListaAgendamentos="{Binding ConfirmadosObservable}"
+                                                 StatusAlvo="Confirmado"
+                                                 ComandoDrop="{Binding MoverAgendamentoCommand}"
+                                                 EmptyTemplate="{StaticResource ColunaVaziaTemplate}" />
+
+                        <!-- Coluna 3: Em Andamento -->
+                        <components:ColunaKanban Titulo="Em Andamento"
+                                                 Contador="{Binding TotalEmAndamento}"
+                                                 CorColuna="{DynamicResource AmareloEmAndamento}"
+                                                 ListaAgendamentos="{Binding EmAndamentoObservable}"
+                                                 StatusAlvo="EmAndamento"
+                                                 ComandoDrop="{Binding MoverAgendamentoCommand}"
+                                                 EmptyTemplate="{StaticResource ColunaVaziaTemplate}" />
+
+                        <!-- Coluna 4: Concluído -->
+                        <components:ColunaKanban Titulo="Concluídos"
+                                                 Contador="{Binding TotalConcluidos}"
+                                                 CorColuna="{DynamicResource RoxoConcluido}"
+                                                 ListaAgendamentos="{Binding ConcluidosObservable}"
+                                                 StatusAlvo="Concluido"
+                                                 ComandoDrop="{Binding MoverAgendamentoCommand}"
+                                                 EmptyTemplate="{StaticResource ColunaVaziaTemplate}" />
+
+                        <!-- Coluna 5: Cancelado -->
+                        <components:ColunaKanban Titulo="Cancelados"
+                                                 Contador="{Binding TotalCancelados}"
+                                                 CorColuna="{DynamicResource VermelhoCancelado}"
+                                                 ListaAgendamentos="{Binding CanceladosObservable}"
+                                                 StatusAlvo="Cancelado"
+                                                 ComandoDrop="{Binding MoverAgendamentoCommand}"
+                                                 EmptyTemplate="{StaticResource ColunaVaziaTemplate}" />
+                        
+                    </HorizontalStackLayout>
+                </ScrollView>
+            </Grid>
+        </RefreshView>
+
+        <!-- Indicador de Carregamento Overlay -->
+        <components:IndicadorCarregamento EstaCarregando="{Binding EstaCarregando}" Texto="Atualizando quadro..." />
+    </Grid>
+</ContentPage>

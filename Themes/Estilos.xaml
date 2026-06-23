@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Estilos de Texto / Labels -->
+    <Style x:Key="LabelTituloGrande" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FonteSemibold}" />
+        <Setter Property="FontSize" Value="{StaticResource TamanhoTituloGrande}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextoPrimarioClaro}, Dark={StaticResource TextoPrimarioEscuro}}" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+    </Style>
+
+    <Style x:Key="LabelTituloMedio" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FonteSemibold}" />
+        <Setter Property="FontSize" Value="{StaticResource TamanhoTituloMedio}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextoPrimarioClaro}, Dark={StaticResource TextoPrimarioEscuro}}" />
+    </Style>
+
+    <Style x:Key="LabelTituloPequeno" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FonteSemibold}" />
+        <Setter Property="FontSize" Value="{StaticResource TamanhoTituloPequeno}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextoPrimarioClaro}, Dark={StaticResource TextoPrimarioEscuro}}" />
+    </Style>
+
+    <Style x:Key="LabelCorpo" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontePadrao}" />
+        <Setter Property="FontSize" Value="{StaticResource TamanhoTextoCorpo}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextoSecundarioClaro}, Dark={StaticResource TextoSecundarioEscuro}}" />
+    </Style>
+
+    <Style x:Key="LabelSecundario" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontePadrao}" />
+        <Setter Property="FontSize" Value="{StaticResource TamanhoTextoPequeno}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextoTerciarioClaro}, Dark={StaticResource TextoTerciarioEscuro}}" />
+    </Style>
+
+    <Style x:Key="LabelIcone" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FonteIcones}" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextoSecundarioClaro}, Dark={StaticResource TextoSecundarioEscuro}}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <!-- Estilos de Border / Frame (Cards) -->
+    <Style x:Key="BorderCard" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CardFundoClaro}, Dark={StaticResource CardFundoEscuro}}" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource BordaClara}, Dark={StaticResource BordaEscura}}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="Padding" Value="{StaticResource PaddingCard}" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Offset="0,4"
+                        Radius="8"
+                        Opacity="0.08"
+                        Brush="{AppThemeBinding Light={StaticResource SombraCorClara}, Dark={StaticResource SombraCorEscura}}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Estilos de Inputs -->
+    <Style x:Key="InputBase" TargetType="InputView">
+        <Setter Property="FontFamily" Value="{StaticResource FontePadrao}" />
+        <Setter Property="FontSize" Value="{StaticResource TamanhoTextoCorpo}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextoPrimarioClaro}, Dark={StaticResource TextoPrimarioEscuro}}" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource TextoTerciarioClaro}, Dark={StaticResource TextoTerciarioEscuro}}" />
+    </Style>
+
+    <Style x:Key="EntryCustom" TargetType="Entry" BasedOn="{StaticResource InputBase}">
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Focused" />
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

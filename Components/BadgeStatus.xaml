@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:AgendAS.Converters"
+             x:Class="AgendAS.Components.BadgeStatus"
+             x:Name="this">
+
+
+
+    <Border StrokeShape="RoundRectangle 8"
+            StrokeThickness="0"
+            BackgroundColor="{Binding Status, Source={x:Reference this}, Converter={StaticResource StatusParaCor}}"
+            Padding="8,4"
+            HorizontalOptions="Start"
+            VerticalOptions="Center">
+        
+        <Label Text="{Binding Status, Source={x:Reference this}, Converter={StaticResource StatusParaTexto}}"
+               TextColor="White"
+               FontFamily="{StaticResource FonteSemibold}"
+               FontSize="{StaticResource TamanhoTextoMini}"
+               HorizontalOptions="Center"
+               VerticalOptions="Center" />
+    </Border>
+</ContentView>

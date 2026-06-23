@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AgendAS.Components.BarraPesquisa"
+             x:Name="this">
+
+    <Border StrokeShape="RoundRectangle 12"
+            StrokeThickness="1"
+            Stroke="{DynamicResource BordaCor}"
+            BackgroundColor="{DynamicResource CardFundoCor}"
+            HeightRequest="46"
+            Padding="12,0"
+            Margin="0,0,0,12">
+        
+        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="8">
+            <!-- Ícone de Lupa -->
+            <Label Grid.Column="0"
+                   Text="&#xe8b6;"
+                   Style="{StaticResource LabelIcone}"
+                   TextColor="{DynamicResource TextoTerciarioCor}" />
+
+            <!-- Entrada de Texto -->
+            <Entry Grid.Column="1"
+                   Text="{Binding TextoPesquisa, Source={x:Reference this}, Mode=TwoWay}"
+                   Placeholder="{Binding Placeholder, Source={x:Reference this}}"
+                   Style="{StaticResource EntryCustom}"
+                   BackgroundColor="Transparent"
+                   VerticalOptions="Center" />
+
+            <!-- Botão de Limpar (Visível apenas se houver texto) -->
+            <Label Grid.Column="2"
+                   Text="&#xe5cd;"
+                   Style="{StaticResource LabelIcone}"
+                   TextColor="{DynamicResource TextoTerciarioCor}"
+                   IsVisible="{Binding TextoPesquisa, Source={x:Reference this}, Converter={StaticResource StringPreenchidaParaBoolean}}"
+                   VerticalOptions="Center">
+                
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ComandoLimpar, Source={x:Reference this}}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </Border>
+</ContentView>

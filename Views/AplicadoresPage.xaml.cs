@@ -1,3 +1,4 @@
+using AgendAS.Helpers;
 using AgendAS.ViewModels;
 using Microsoft.Maui.Controls;
 
@@ -6,6 +7,8 @@ namespace AgendAS.Views;
 public partial class AplicadoresPage : ContentPage
 {
     private readonly AplicadoresViewModel _viewModel;
+
+    public AplicadoresPage() : this(ServicoLocalizador.Resolver<AplicadoresViewModel>()) { }
 
     public AplicadoresPage(AplicadoresViewModel viewModel)
     {

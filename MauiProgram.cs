@@ -38,7 +38,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<INotificacaoService, NotificacaoService>();
 
         // 3. Registro de ViewModels
-        builder.Services.AddSingleton<LoginViewModel>();
+        builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddSingleton<DashboardViewModel>();
         builder.Services.AddSingleton<AgendaViewModel>();
         builder.Services.AddSingleton<KanbanViewModel>();
@@ -51,7 +51,7 @@ public static class MauiProgram
         builder.Services.AddTransient<NovoAgendamentoViewModel>();
 
         // 4. Registro de Views
-        builder.Services.AddSingleton<LoginPage>();
+        builder.Services.AddTransient<LoginPage>();
         builder.Services.AddSingleton<DashboardPage>();
         builder.Services.AddSingleton<AgendaPage>();
         builder.Services.AddSingleton<KanbanPage>();

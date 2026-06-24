@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using AgendAS.Helpers;
 using AgendAS.ViewModels;
 using Microsoft.Maui.Controls;
 
@@ -7,6 +8,8 @@ namespace AgendAS.Views;
 public partial class LoginPage : ContentPage
 {
     private readonly LoginViewModel _viewModel;
+
+    public LoginPage() : this(ServicoLocalizador.Resolver<LoginViewModel>()) { }
 
     public LoginPage(LoginViewModel viewModel)
     {

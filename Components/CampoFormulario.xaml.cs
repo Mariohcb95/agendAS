@@ -56,10 +56,10 @@ public partial class CampoFormulario : ContentView
     {
         InitializeComponent();
         
-        // Se o conteúdo já foi definido antes do InitializeComponent concluir, aplica ao Presenter agora
-        if (Conteudo != null && Presenter != null)
+        // Se o conteúdo já foi definido antes do InitializeComponent concluir, aplica ao ContainerConteudo agora
+        if (Conteudo != null && ContainerConteudo != null)
         {
-            Presenter.Content = Conteudo;
+            ContainerConteudo.Content = Conteudo;
         }
     }
 
@@ -73,9 +73,9 @@ public partial class CampoFormulario : ContentView
 
     private static void OnConteudoChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        if (bindable is CampoFormulario campo && campo.Presenter != null)
+        if (bindable is CampoFormulario campo && campo.ContainerConteudo != null)
         {
-            campo.Presenter.Content = (View)newValue;
+            campo.ContainerConteudo.Content = (View)newValue;
         }
     }
 }

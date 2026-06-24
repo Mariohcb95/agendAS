@@ -9,10 +9,7 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
 
-        // Registro de rotas que não estão listadas no menu principal do Shell
+        // Registro de rotas para navegação programática (páginas que não estão no Flyout)
         Routing.RegisterRoute(nameof(NovoAgendamentoPage), typeof(NovoAgendamentoPage));
-
-        // Força a página de login como a página padrão de inicialização no Shell
-        CurrentItem = Items[0];
     }
 }

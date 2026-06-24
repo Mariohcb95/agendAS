@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using AgendAS.Models;
 using AgendAS.Services.Interfaces;
 using AgendAS.ViewModels.Base;
+using AgendAS.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
@@ -12,14 +13,19 @@ public partial class PerfilViewModel : ViewModelBase
 {
     private readonly IUsuarioService _usuarioService;
     private readonly INotificacaoService _notificacaoService;
+    private readonly IServiceProvider _serviceProvider;
 
     [ObservableProperty]
     private Usuario? usuario;
 
-    public PerfilViewModel(IUsuarioService usuarioService, INotificacaoService notificacaoService)
+    public PerfilViewModel(
+        IUsuarioService usuarioService, 
+        INotificacaoService notificacaoService,
+        IServiceProvider serviceProvider)
     {
         _usuarioService = usuarioService;
         _notificacaoService = notificacaoService;
+        _serviceProvider = serviceProvider;
         Titulo = "Meu Perfil";
     }
 
@@ -41,7 +47,14 @@ public partial class PerfilViewModel : ViewModelBase
         {
             await _usuarioService.LogoutAsync();
             await _notificacaoService.EnviarToastAsync("Sessão encerrada.");
-            await Shell.Current.GoToAsync("///LoginPage");
+
+            // Volta para a LoginPage resolvida do DI, saindo do Shell
+            var loginPage = _serviceProvider.GetRequiredService<LoginPage>();
+            if (Application.Current != null)
+            {
+                Application.Current.MainPage = new NavigationPage(loginPage);
+            }
         }
     }
 }
+

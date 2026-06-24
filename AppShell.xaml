@@ -22,13 +22,6 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <!-- Página de Login (Fora da navegação do menu Flyout) -->
-    <ShellContent
-        Title="Entrar"
-        ContentTemplate="{DataTemplate views:LoginPage}"
-        Route="LoginPage"
-        FlyoutItemIsVisible="False" />
-
     <!-- Área de Menu Executivo Flyout (Menu Hambúrguer) -->
     <FlyoutItem Title="Dashboard" Style="{StaticResource BaseShellItemStyle}">
         <FlyoutItem.Icon>

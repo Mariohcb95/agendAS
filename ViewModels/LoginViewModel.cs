@@ -61,8 +61,11 @@ public partial class LoginViewModel : ViewModelBase
                 var usuario = await _usuarioService.ObterUsuarioLogadoAsync();
                 await _notificacaoService.EnviarToastAsync($"Seja bem-vindo, {usuario?.NomeCompleto}!");
                 
-                // Navega para o Dashboard no Shell limpando a pilha de Login
-                await Shell.Current.GoToAsync("///DashboardPage");
+                // Troca a MainPage da aplicação para o AppShell (com menu Flyout)
+                if (Application.Current != null)
+                {
+                    Application.Current.MainPage = new AppShell();
+                }
             }
             else
             {

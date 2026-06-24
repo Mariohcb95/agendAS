@@ -20,7 +20,7 @@
                 HeightRequest="{Binding AlturaCampo, Source={x:Reference this}}">
             
             <!-- Injetamos o controle interno aqui -->
-            <ContentPresenter x:Name="Presenter" />
+            <ContentView x:Name="ContainerConteudo" />
         </Border>
 
         <!-- Mensagem de Erro (Visível se houver erro) -->

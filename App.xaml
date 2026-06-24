@@ -9,7 +9,7 @@
             <!-- Conversores Globais -->
             <converters:StatusParaCorConverter x:Key="StatusParaCor" />
             <converters:StatusParaTextoConverter x:Key="StatusParaTexto" />
-            <converters:InversoBooleanConverter x:Key="InversoBoolean" />
+            <converters:InversoBooleanConverter x:Key="InversoBooleanConverter" />
             <converters:DataParaTextoConverter x:Key="DataParaTexto" />
             <converters:StringPreenchidaParaBooleanConverter x:Key="StringPreenchidaParaBoolean" />
             <converters:BooleanParaCorConverter x:Key="BooleanParaCor" />

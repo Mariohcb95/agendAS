@@ -10,26 +10,38 @@ public partial class App : Application
 
     public App(IServiceProvider serviceProvider)
     {
-        _serviceProvider = serviceProvider;
-        ServicoLocalizador.Inicializar(serviceProvider);
-
-        InitializeComponent();
-
         try
         {
-            // Define a página inicial como LoginPage usando NavigationPage
+            _serviceProvider = serviceProvider;
+            ServicoLocalizador.Inicializar(serviceProvider);
+
+            InitializeComponent();
+
             var loginPage = _serviceProvider.GetRequiredService<Views.LoginPage>();
             MainPage = new NavigationPage(loginPage);
         }
         catch (System.Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"[AgendAS] Erro ao resolver LoginPage no construtor do App: {ex.Message}");
-            // Fallback síncrono simples em caso de falha drástica do DI
-            MainPage = new NavigationPage(new Views.LoginPage());
+            System.Diagnostics.Debug.WriteLine($"[AgendAS] ERRO CRÍTICO NA INICIALIZAÇÃO: {ex}");
+            System.Console.WriteLine($"[AgendAS] ERRO CRÍTICO NA INICIALIZAÇÃO: {ex}");
+            
+            // Exibe o erro diretamente na tela no emulador para podermos ler o stack trace gerenciado
+            MainPage = new ContentPage
+            {
+                Content = new ScrollView
+                {
+                    Content = new Label
+                    {
+                        Text = $"Erro de Inicialização:\n\n{ex.Message}\n\nDetalhes:\n{ex}",
+                        TextColor = Microsoft.Maui.Graphics.Colors.Red,
+                        FontFamily = "monospace",
+                        Padding = 20
+                    }
+                }
+            };
         }
     }
-
-    private string _ultimoTemaAplicado = string.Empty;
+  private string _ultimoTemaAplicado = string.Empty;
 
     public void AplicarTema(string tema)
     {

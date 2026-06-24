@@ -77,18 +77,22 @@
                         <!-- Usuário -->
                         <components:CampoFormulario Titulo="Usuário"
                                                     MensagemErro="{Binding ErroUsuario}">
-                            <Entry Text="{Binding NomeUsuario, Mode=TwoWay}"
-                                   Placeholder="Ex: admin"
-                                   Style="{StaticResource EntryCustom}" />
+                            <components:CampoFormulario.Conteudo>
+                                <Entry Text="{Binding NomeUsuario, Mode=TwoWay}"
+                                       Placeholder="Ex: admin"
+                                       Style="{StaticResource EntryCustom}" />
+                            </components:CampoFormulario.Conteudo>
                         </components:CampoFormulario>
 
                         <!-- Senha -->
                         <components:CampoFormulario Titulo="Senha"
                                                     MensagemErro="{Binding ErroSenha}">
-                            <Entry Text="{Binding Senha, Mode=TwoWay}"
-                                   Placeholder="Ex: 123456"
-                                   IsPassword="True"
-                                   Style="{StaticResource EntryCustom}" />
+                            <components:CampoFormulario.Conteudo>
+                                <Entry Text="{Binding Senha, Mode=TwoWay}"
+                                       Placeholder="Ex: 123456"
+                                       IsPassword="True"
+                                       Style="{StaticResource EntryCustom}" />
+                            </components:CampoFormulario.Conteudo>
                         </components:CampoFormulario>
 
                         <!-- Link Esqueci Minha Senha -->

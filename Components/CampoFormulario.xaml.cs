@@ -2,7 +2,6 @@ using Microsoft.Maui.Controls;
 
 namespace AgendAS.Components;
 
-[ContentProperty(nameof(Conteudo))]
 public partial class CampoFormulario : ContentView
 {
     public static readonly BindableProperty TituloProperty =

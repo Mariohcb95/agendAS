@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AgendAS.Components.BotaoPrimario"
-             x:Name="this">
+             xmlns:local="clr-namespace:AgendAS.Components"
+             x:Class="AgendAS.Components.BotaoPrimario">
 
     <Border StrokeShape="RoundRectangle 12"
             StrokeThickness="0"
@@ -11,27 +11,27 @@
             HorizontalOptions="FillAndExpand">
         
         <Border.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding Comando, Source={x:Reference this}}" />
+            <TapGestureRecognizer Command="{Binding Comando, Source={RelativeSource AncestorType={x:Type local:BotaoPrimario}}}" />
         </Border.GestureRecognizers>
 
         <Grid HorizontalOptions="Center" VerticalOptions="Center">
             <!-- Label normal -->
-            <Label Text="{Binding Texto, Source={x:Reference this}}"
+            <Label Text="{Binding Texto, Source={RelativeSource AncestorType={x:Type local:BotaoPrimario}}}"
                    TextColor="White"
                    FontFamily="{StaticResource FonteSemibold}"
                    FontSize="{StaticResource TamanhoTextoCorpo}"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
-                   IsVisible="{Binding EstaCarregando, Source={x:Reference this}, Converter={StaticResource InversoBooleanConverter}}" />
+                   IsVisible="{Binding EstaCarregando, Source={RelativeSource AncestorType={x:Type local:BotaoPrimario}}, Converter={StaticResource InversoBooleanConverter}}" />
 
             <!-- Indicador de Carregamento -->
-            <ActivityIndicator IsRunning="{Binding EstaCarregando, Source={x:Reference this}}"
+            <ActivityIndicator IsRunning="{Binding EstaCarregando, Source={RelativeSource AncestorType={x:Type local:BotaoPrimario}}}"
                                Color="White"
                                HeightRequest="24"
                                WidthRequest="24"
                                HorizontalOptions="Center"
                                VerticalOptions="Center"
-                               IsVisible="{Binding EstaCarregando, Source={x:Reference this}}" />
+                               IsVisible="{Binding EstaCarregando, Source={RelativeSource AncestorType={x:Type local:BotaoPrimario}}}" />
         </Grid>
     </Border>
 </ContentView>
